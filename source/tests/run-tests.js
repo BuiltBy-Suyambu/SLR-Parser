@@ -338,6 +338,30 @@ test('SLR(1) question answer follows the conflict check', () => {
   assert.strictEqual(Practice.slrQuestion(build('S -> L = R | R\nL -> * R | id\nR -> L')).answer, false);
 });
 
+section('Test mode best result');
+test('best key depends on the productions, not spacing or input', () => {
+  const k = (t) => Practice.bestKey(Grammar.parseGrammar(t));
+  assert.strictEqual(k('S -> AA\nA -> aA | b'), k('S->A A\n A -> a A|b'));
+  assert.notStrictEqual(k('S -> AA\nA -> aA | b'), k('S -> AA\nA -> bA | a'));
+});
+test('higher score wins, then shorter time', () => {
+  const b = { ok: 17, of: 20, ms: 700000 };
+  assert.ok(Practice.isBetter({ ok: 18, of: 20, ms: 900000 }, b));
+  assert.ok(!Practice.isBetter({ ok: 16, of: 20, ms: 1000 }, b));
+  assert.ok(Practice.isBetter({ ok: 17, of: 20, ms: 600000 }, b));
+  assert.ok(!Practice.isBetter({ ok: 17, of: 20, ms: 700000 }, b));
+  assert.ok(!Practice.isBetter({ ok: 17, of: 20, ms: 800000 }, b));
+  assert.ok(Practice.isBetter({ ok: 1, of: 2, ms: 5 }, null));
+});
+test('scores compare as fractions across different totals', () => {
+  assert.ok(Practice.isBetter({ ok: 9, of: 10, ms: 5 }, { ok: 17, of: 20, ms: 5 }));
+});
+test('malformed stored data reads as no result', () => {
+  ['', 'x', 'null', '5', '{}', '{"ok":3,"of":2,"ms":1}', '{"ok":1,"of":0,"ms":1}', '{"ok":"a","of":2,"ms":1}', '{"ok":1,"of":2,"ms":-1}'].forEach((r) => assert.strictEqual(Practice.parseBest(r), null, r));
+  assert.strictEqual(Practice.parseBest(null), null);
+  assert.deepStrictEqual(Practice.parseBest('{"ok":3,"of":4,"ms":900,"x":1}'), { ok: 3, of: 4, ms: 900 });
+});
+
 /* ------------------------------------------------------------------ */
 console.log('\n========================================');
 console.log(' SLR(1) Visualizer · test suite');
