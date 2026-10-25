@@ -7,11 +7,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Caveat:wght@500;700&family=Cousine:wght@400;700&display=swap" rel="stylesheet">
 <style>
-:root{color-scheme:light;--desk:#ececec;--paper:#fff;--print:#1d1d1d;--muted:#6b6b6b;--rule:#c9c9c9;--ink:#222222;--red:#c62d2d;--teal:#111111;--teal-d:#111111;--teal-w:#f0f0f0;--ok:#2f8a4a;
+:root{color-scheme:light;--gold:#b86e00;--desk:#ececec;--paper:#fff;--print:#1d1d1d;--muted:#6b6b6b;--rule:#c9c9c9;--ink:#222222;--red:#c62d2d;--teal:#111111;--teal-d:#111111;--teal-w:#f0f0f0;--ok:#2f8a4a;
   --on-teal:#fff;--head:#f4f4f4;--shadow:#c4c0b8;--good-bg:#e9f5ec;--bad-bg:#fbe9e9;--good-box:#f2faf4;--bad-box:#fdf3f3;--line:#eee;--warn:#9a5b00;--bar:#111111}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--desk:#121212;--paper:#1d1d1f;--print:#e8e8e8;--muted:#a3a3a3;--rule:#46464a;--ink:#f2f2f2;--red:#ff7070;--teal:#e8e8e8;--teal-d:#f2f2f2;--teal-w:#2c2c30;--ok:#5fcf7f;
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--gold:#ffb020;--desk:#121212;--paper:#1d1d1f;--print:#e8e8e8;--muted:#a3a3a3;--rule:#46464a;--ink:#f2f2f2;--red:#ff7070;--teal:#e8e8e8;--teal-d:#f2f2f2;--teal-w:#2c2c30;--ok:#5fcf7f;
   --on-teal:#111;--head:#28282b;--shadow:#000;--good-bg:#173a22;--bad-bg:#43191b;--good-box:#152a1c;--bad-box:#311719;--line:#2e2e32;--warn:#e7a948;--bar:#000}}
-:root[data-theme="dark"]{color-scheme:dark;--desk:#121212;--paper:#1d1d1f;--print:#e8e8e8;--muted:#a3a3a3;--rule:#46464a;--ink:#f2f2f2;--red:#ff7070;--teal:#e8e8e8;--teal-d:#f2f2f2;--teal-w:#2c2c30;--ok:#5fcf7f;
+:root[data-theme="dark"]{color-scheme:dark;--gold:#ffb020;--desk:#121212;--paper:#1d1d1f;--print:#e8e8e8;--muted:#a3a3a3;--rule:#46464a;--ink:#f2f2f2;--red:#ff7070;--teal:#e8e8e8;--teal-d:#f2f2f2;--teal-w:#2c2c30;--ok:#5fcf7f;
   --on-teal:#111;--head:#28282b;--shadow:#000;--good-bg:#173a22;--bad-bg:#43191b;--good-box:#152a1c;--bad-box:#311719;--line:#2e2e32;--warn:#e7a948;--bar:#000}
 
 *{box-sizing:border-box}html,body{margin:0}
@@ -24,6 +24,7 @@ button,input,select,textarea{font:inherit;color:inherit}button{cursor:pointer}
 .seg{display:flex;background:rgba(255,255,255,.12);border-radius:7px;padding:2px}
 .seg button{border:0;background:none;color:#cfe3e5;padding:6px 14px;border-radius:6px}
 .seg button.on{background:#fff;color:#111}
+.seg button:disabled{opacity:.4;cursor:not-allowed}
 .btn{border:0;background:var(--paper);color:var(--print);border-radius:6px;padding:7px 14px;font:600 14px system-ui,sans-serif}
 .btn.pri{background:var(--teal);color:var(--on-teal)}
 .bar .btn{background:#fff;color:#111}
@@ -131,6 +132,10 @@ table.w td.conf .ink{color:var(--red)}
 .tsubmit p{margin:0;color:var(--muted);font-size:14px;flex:1;min-width:220px}
 .tresult{border:2px solid var(--print);padding:14px 18px;margin:0 0 20px}
 .tresult h2{margin:0 0 6px;font:700 19px "Lora"}
+.printonly{display:none}
+.tresult .best{margin:10px 0 0;font-weight:600}
+.tresult .best,.tresult .big.new{color:var(--gold)}
+.tresult .best.new{font-size:17px}
 .tresult .big{font:700 30px "Cousine";margin-right:22px}
 .tresult table{border-collapse:collapse;margin-top:10px;font-size:14px}
 .tresult td{padding:2px 14px 2px 0}
@@ -148,7 +153,7 @@ td .spoil{display:block;margin:3px auto 0;width:max-content}
 .tbegin p{margin:0;flex:1;min-width:220px;font-size:14px;color:var(--muted)}
 @media (max-width:1300px){.note{position:static;display:block;width:auto;transform:none;margin:4px 0 0}.note::before{display:none}}
 @media (max-width:700px){.sheet,.inputs{padding:22px 16px}.states{grid-template-columns:repeat(2,1fr)}.pe-row{grid-template-columns:34px 70px 22px minmax(0,1fr) 32px 30px}.pe-meta{grid-template-columns:1fr}.pbar-in{grid-template-columns:1fr}}
-@media print{.bar,.inputs,.pbar{display:none}body{background:#fff}.sheet{box-shadow:none;margin:0;width:auto}}
+@media print{.bar,.inputs,.pbar,.noprint,.tsubmit button{display:none}.tresult{break-inside:avoid}.printonly{display:block}.solution{break-before:page}.solution .note{display:none}.write{animation:none;clip-path:none}body{background:#fff}.sheet{box-shadow:none;margin:0;width:auto}}
 @media (prefers-reduced-motion:reduce){.write{animation:none;clip-path:none}}
 </style></head>
 <body>
@@ -263,6 +268,8 @@ function freshP(){return {v:{},res:{},shown:{},nStates:1,nRows:1,want:{},peeked:
 var PS={practice:freshP(),test:freshP()},P=PS.practice;
 function TEST(){return M.mode==='test'}
 function locked(){return TEST()&&(P.submitted||!P.begun)}
+/* A test is active from Begin until Submit; Retake, Restart and a rebuilt grammar replace PS.test and end it. */
+function testActive(){return PS.test.begun&&!PS.test.submitted}
 function val(id){return (P.v[id]||'').trim()}
 function norm(t){return String(t).replace(/\s+/g,'').replace(/->|-->|::=/g,'→').replace(/\./g,'•').replace(/[’′']/g,"'")}
 function setOf(t){return Practice.parseSymbolSet(t,s.g.terminals).slice().sort().join(',')}
@@ -290,7 +297,7 @@ function practiceSheet(){
   else{h+='<table class="w"><tr><th>#</th><th>Stack</th><th>Input</th><th>Action</th></tr>';for(var k=0;k<P.nRows;k++)h+='<tr><td>'+(k+1)+'</td><td>'+inp('p-ps-'+k,220)+'</td><td>'+inp('p-pi-'+k,140)+'</td><td>'+inp('p-pa-'+k,90)+'</td></tr>';
     h+='</table>'+(locked()?'':'<div class="pctl"><button class="btn line" type="button" id="addrow">+ Add row</button>'+(P.nRows>1?'<button class="btn line" type="button" id="delrow">− Remove last</button>':'')+'</div>')+ctlRow(6)}
   var tot=0,ok=0;[1,2,3,4,5,6].forEach(function(n){if(P.res[n]){tot+=P.res[n].of;ok+=P.res[n].ok}});
-  if(TEST())return h+'</div>'+(!P.begun?'':P.submitted?'<div class="tsubmit"><p>Submitted. Time taken '+fmt(P.time)+'. The full worked solution is in Teach mode.</p><button class="btn pri" type="button" id="tretake">Retake test</button></div>':'<div class="tsubmit"><p>Done? Submitting marks every part and stops the stopwatch. You cannot change answers afterwards.</p><button class="btn pri" type="button" id="tsubmit">Submit test</button></div>');
+  if(TEST())return h+'</div>'+(!P.begun?'':P.submitted?'<div class="tsubmit"><p>Submitted. Time taken '+fmt(P.time)+'. The full worked solution is in Teach mode, and is included when you print or save as PDF.</p><button class="btn pri" type="button" id="tretake">Retake test</button></div>'+solutionPart():'<div class="tsubmit"><p>Done? Submitting marks every part and stops the stopwatch. You cannot change answers afterwards.</p><button class="btn pri" type="button" id="tsubmit">Submit test</button></div>');
   return h+'</div>'+(tot?'<p class="ptotal">Total so far: '+ok+' / '+tot+'</p>':'');
 }
 /* ---------- test mode: stopwatch, submit, result ----------
@@ -307,11 +314,23 @@ function submitTest(){
   P.time=elapsed();pauseClock();P.submitted=true;P.res={};
   [1,2,3,4,5,6].forEach(function(n){if(n<6||s.sim)check(n,false)});
   var ok=0,of=0;[1,2,3,4,5,6].forEach(function(n){if(P.res[n]){ok+=P.res[n].ok;of+=P.res[n].of}});
-  P.score={ok:ok,of:of};render();scrollTo(0,0);
+  P.score={ok:ok,of:of};P.best=saveBest({ok:ok,of:of,ms:P.time});render();$('.tresult').scrollIntoView();
 }
+/* Keeps the better of this attempt and the stored best for this grammar; returns {r, isNew}. */
+function saveBest(cur){
+  var key=Practice.bestKey(s.g),prev=Practice.parseBest(Core.store(key));
+  if(cur.of>0&&Practice.isBetter(cur,prev)){Core.store(key,JSON.stringify(cur));return {r:cur,isNew:true}}
+  return prev?{r:prev,isNew:false}:null;
+}
+/* Print-only Part B: the finished worked solution, the same sheet Teach mode shows at its last step. */
+function solutionPart(){
+  var k=M.k;M.k=STEPS.length-1;var h=sheet();M.k=k;
+  return '<section class="solution printonly"><h2>Part B · Solution</h2>'+h+'</section>'}
 function resultCard(){var sc=P.score,pct=sc.of?Math.round(100*sc.ok/sc.of):0;
-  return '<div class="tresult"><h2>Test result</h2><span class="big">'+sc.ok+' / '+sc.of+'</span><span class="big">'+pct+'%</span><span class="big">⏱ '+fmt(P.time)+'</span>'+
-    '<table>'+[1,2,3,4,5,6].filter(function(n){return P.res[n]}).map(function(n){var r=P.res[n];return '<tr><td>'+n+'. '+NAMES[n]+'</td><td class="pmark '+(r.ok===r.of?'ok':'bad')+'">'+r.ok+' / '+r.of+'</td></tr>'}).join('')+'</table></div>'}
+  return '<h2 class="printonly">Part A · Your approach and marks</h2><div class="tresult"><h2>Test result</h2><span class="big">'+sc.ok+' / '+sc.of+'</span><span class="big'+(P.best&&P.best.isNew?' new':'')+'">'+pct+'%</span><span class="big">⏱ '+fmt(P.time)+'</span>'+
+    '<table>'+[1,2,3,4,5,6].filter(function(n){return P.res[n]}).map(function(n){var r=P.res[n];return '<tr><td>'+n+'. '+NAMES[n]+'</td><td class="pmark '+(r.ok===r.of?'ok':'bad')+'">'+r.ok+' / '+r.of+'</td></tr>'}).join('')+'</table>'+
+    (P.best?'<p class="best'+(P.best.isNew?' new':'')+'">'+(P.best.isNew?'🏆 New Best! You scored '+pct+'% in '+fmt(P.best.r.ms)+'.':'⭐ Your Best: '+Math.round(100*P.best.r.ok/P.best.r.of)+'% in '+fmt(P.best.r.ms)+'. Current attempt: '+pct+'%.')+'</p>':'')+
+    '<p class="noprint"><button class="btn line" type="button" data-print>Print / Save as PDF</button></p></div>'}
 function isDark(){var cur=document.documentElement.getAttribute('data-theme');return cur?cur==='dark':matchMedia('(prefers-color-scheme: dark)').matches}
 function themeIcon(){$('#theme').textContent=isDark()?'☀ Light':'☾ Dark'}
 themeIcon();matchMedia('(prefers-color-scheme: dark)').addEventListener('change',themeIcon);
@@ -354,9 +373,10 @@ function render(){
   var t=M.mode==='teach',n=STEPS.length;
   if(t)$('#ctl').innerHTML='<button class="btn" id="first" type="button">⏮</button> <button class="btn" id="prev" type="button">◀ Back</button> <span class="cnt">Step '+(M.k+1)+' of '+n+'</span> <button class="btn pri" id="next" type="button">Next step ▶</button>'+
     (TEACH_NAV?' <button class="btn" id="nextsec" type="button">Next section ⏭</button> <button class="btn" id="play" type="button">'+(playTimer?'⏸ Pause':'▶ Play')+'</button>':'');
-  else if(TEST())$('#ctl').innerHTML='<span class="clock" id="clock" title="Time taken">'+fmt(P.submitted?P.time:elapsed())+'</span>'+(P.begun&&!P.submitted?' <button class="btn" id="tpause" type="button">'+(P.t0?'Pause':'Resume')+'</button>':'')+(P.begun?' <button class="btn" id="tretake" type="button">Restart test</button>':'');
+  else if(TEST())$('#ctl').innerHTML='<span class="clock" id="clock" title="Time taken">'+fmt(P.submitted?P.time:elapsed())+'</span>'+(P.submitted?' <button class="btn" type="button" data-print>Print / Save as PDF</button>':'')+(P.begun&&!P.submitted?' <button class="btn" id="tpause" type="button">'+(P.t0?'Pause':'Resume')+'</button>':'')+(P.begun?' <button class="btn" id="tretake" type="button">Restart test</button>':'');
   else $('#ctl').innerHTML='<button class="btn" id="restart" type="button">Clear my answers</button>';
   if(t){$('#first').disabled=$('#prev').disabled=M.k===0;$('#next').disabled=M.k===n-1;if(TEACH_NAV)$('#nextsec').disabled=M.k===n-1}
+  document.querySelectorAll('.seg button').forEach(function(x){var off=testActive()&&x.dataset.mode!=='test';x.disabled=off;x.title=off?'Locked until you submit the test':''});
   var y=scrollY;$('#sheet').innerHTML=t?sheet():practiceSheet();
   if(PEEK&&!t&&window.Spoiler)Spoiler.scan($('#sheet'),function(el){P.peeked[el.getAttribute('data-peek')]=true});$('#pbar').hidden=true;
   if(!t){scrollTo(0,y);return}
@@ -373,7 +393,7 @@ function stopPlay(){clearInterval(playTimer);playTimer=null}
 function nextSection(){var k=M.k,stage=STEPS[k].stage;while(k<STEPS.length-1&&STEPS[k].stage===stage)k++;go(k)}
 function go(k){M.k=Math.max(0,Math.min(STEPS.length-1,k));render()}
 document.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;
-  if(b.dataset.mode){stopPlay();M.mode=b.dataset.mode;P=PS[M.mode]||P;document.querySelectorAll('.seg button').forEach(function(x){x.classList.toggle('on',x===b)});render();scrollTo(0,0);return}
+  if(b.dataset.mode){if(testActive()&&b.dataset.mode!=='test')return;stopPlay();M.mode=b.dataset.mode;P=PS[M.mode]||P;document.querySelectorAll('.seg button').forEach(function(x){x.classList.toggle('on',x===b)});render();scrollTo(0,0);return}
   if(b.id==='next')go(M.k+1);
   if(b.id==='nextsec')nextSection();
   if(b.id==='play'){if(playTimer){stopPlay();render()}else startPlay()}if(b.id==='prev')go(M.k-1);if(b.id==='first')go(0);
@@ -387,6 +407,7 @@ document.addEventListener('click',function(e){var b=e.target.closest('button');i
   if(b.id==='show')answer('',true);
   if(b.id==='restart'){P.v={};P.res={};P.want={};P.peeked={};P.nStates=1;P.nRows=1;render()}
   if(b.id==='tsubmit')submitTest();
+  if('print' in b.dataset)window.print();
   if(b.id==='tbegin'){P.begun=true;startClock();render();var fi=document.getElementById('p-aug');if(fi)fi.focus()}
   if(b.id==='tpause'){if(P.t0)pauseClock();else startClock();render()}
   if(b.id==='tretake'&&(P.submitted||confirm('Restart the test? Your answers and the stopwatch are cleared.'))){P=PS.test=freshP();render();scrollTo(0,0)}

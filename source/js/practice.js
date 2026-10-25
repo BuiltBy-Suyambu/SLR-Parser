@@ -252,7 +252,30 @@
     return { correct: got === q.answer };
   }
 
+  /* ---- Test mode: best result per grammar (storage itself lives in the UI) ---- */
+  /* Stable key from the grammar's productions only, so the input string and spacing do not matter. */
+  function bestKey(g) {
+    var s = g.productions.map(function (p) { return p.lhs + '>' + p.rhs.join(' '); }).join('|'), h = 0;
+    for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0;
+    return 'slr.testbest.' + (h >>> 0).toString(36);
+  }
+  /* A stored value is { ok, of, ms }; anything else (missing, malformed) reads as null. */
+  function parseBest(raw) {
+    var r;
+    try { r = JSON.parse(raw); } catch (e) { return null; }
+    if (!r || typeof r !== 'object') return null;
+    if (!(isFinite(r.ok) && isFinite(r.of) && isFinite(r.ms)) || r.of <= 0 || r.ok < 0 || r.ok > r.of || r.ms < 0) return null;
+    return { ok: +r.ok, of: +r.of, ms: +r.ms };
+  }
+  /* Higher score wins; on equal scores the shorter time wins. A missing old result always loses. */
+  function isBetter(a, b) {
+    if (!b) return true;
+    var d = a.ok * b.of - b.ok * a.of;
+    return d > 0 || (d === 0 && a.ms < b.ms);
+  }
+
   var api = {
+    bestKey: bestKey, parseBest: parseBest, isBetter: isBetter,
     rng: rng, shuffle: shuffle,
     parseSymbolSet: parseSymbolSet, compareSets: compareSets,
     normalizeEntry: normalizeEntry, normalizeCell: normalizeCell, checkCell: checkCell,
